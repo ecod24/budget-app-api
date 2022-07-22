@@ -2,12 +2,12 @@ const express = require("express");
 const transactions = express();
 const transactionsData = require("../models/transaction.model");
 
-// transactions.use("/:id", (request, response, next) => {
-// 	if (!transactionsData[request.params.id]) {
-// 		response.redirect("*");
-// 	}
-// 	next();
-// });
+transactions.use("/:id", (request, response, next) => {
+	if (!transactionsData[request.params.id]) {
+		response.status(404).redirect("/error-out-of-bounds");
+	}
+	next();
+});
 
 transactions.get("/", (request, response) => {
 	console.log("GET REQUESTED");
