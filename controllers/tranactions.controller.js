@@ -16,7 +16,8 @@ transactions.get("/", (request, response) => {
 
 transactions.post("/", (request, response) => {
 	console.log("POST REQUESTED");
-	response.json(transactionsData);
+	transactionsData.push(request.body);
+	response.json(transactionsData[transactionsData.length - 1]);
 });
 
 transactions.get("/:id", (request, response) => {
@@ -25,11 +26,14 @@ transactions.get("/:id", (request, response) => {
 });
 
 transactions.put("/:id", (request, response) => {
+	//TODO implement: do "insert" instead of replace if  entry exists at spot
 	console.log(`PUT/${request.params.id} REQUESTED`);
-	response.json(transactionsData[request.params.id]);
+	transactionsData[Number(request.params.id)] = request.body;
+	response.json(transactionsData[Number(request.params.id)]);
 });
 transactions.delete("/:id", (request, response) => {
 	console.log(`DELETE/${request.params.id} REQUESTED`);
+	transactionsData.splice(Number(request.params.id), 1);
 	response.json(transactionsData);
 });
 
